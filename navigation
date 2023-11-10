@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mall Navigation App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #map {
+      width: 80%;
+      height: 400px;
+      margin: 20px auto;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Mall Navigation App</h1>
+  <p>Select a store to get directions:</p>
+  
+  <select id="storeSelect">
+    <option value="1">Electronics Store</option>
+    <option value="2">Clothing Store</option>
+    <option value="3">Bookstore</option>
+  </select>
+
+  <div id="map"></div>
+
+  <script>
+    // Hardcoded store coordinates for simplicity
+    const storeCoordinates = {
+      1: { lat: 40.7128, lng: -74.0060 }, // Electronics Store
+      2: { lat: 40.7123, lng: -74.0079 }, // Clothing Store
+      3: { lat: 40.7130, lng: -74.0085 }  // Bookstore
+    };
+
+    const map = new google.maps.Map(document.getElementById('map'), {
+      center: { lat: 40.7128, lng: -74.0060 },
+      zoom: 15
+    });
+
+    const marker = new google.maps.Marker({
+      map,
+      position: { lat: 40.7128, lng: -74.0060 }, // Default location
+    });
+
+    document.getElementById('storeSelect').addEventListener('change', function () {
+      const selectedStore = this.value;
+      const coordinates = storeCoordinates[selectedStore];
+
+      if (coordinates) {
+        marker.setPosition(coordinates);
+        map.setCenter(coordinates);
+      }
+    });
+  </script>
+
+  <!-- Include the Google Maps JavaScript API -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
+
+</body>
+</html>
